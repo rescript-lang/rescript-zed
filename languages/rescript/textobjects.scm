@@ -24,7 +24,7 @@
 ; Comments
 ;---------
 
-([
+[
   (line_comment)
   (block_comment)
 ] @comment.around

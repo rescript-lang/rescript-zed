@@ -12,4 +12,4 @@ language = "ReScript"
 
 [grammars.rescript]
 repository = "https://github.com/rescript-lang/tree-sitter-rescript"
-commit = "64249e68649c77d3c880e335469b464674ad1cbf"
+commit = "5b90cd4e4138b1231a67977303bda47eb608480a"

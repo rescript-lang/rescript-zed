@@ -1,4 +1,7 @@
-(comment) @comment
+[
+  (line_comment)
+  (block_comment)
+] @comment
 
 ; Identifiers
 ;------------
@@ -16,6 +19,14 @@
   (list)
   (list_pattern)
 ] @type
+
+; Dict
+(dict "dict" @type.builtin)
+(dict_pattern "dict" @type.builtin)
+(dict_entry (string) @property)
+(dict_pattern_entry (string) @property)
+(dict_pattern_entry (value_identifier) @variable.parameter)
+(parameter (dict_pattern (dict_pattern_entry (value_identifier) @variable.parameter)))
 
 ((type_identifier) @type.builtin
   (#any-of? @type.builtin
@@ -64,6 +75,8 @@
   (template_string)
 ] @string
 
+
+(regex) @string.special
 
 (character) @character
 (escape_sequence) @string.escape
@@ -215,6 +228,9 @@
   "**"
   "*."
   "/."
+  "<<"
+  ">>"
+  ">>>"
   "<="
   "=="
   "==="
@@ -222,8 +238,12 @@
   "!="
   "!=="
   ">="
+  "&&&"
   "&&"
+  "|||"
   "||"
+  "^^^"
+  "~~~"
   "="
   ":="
   "->"
@@ -235,8 +255,8 @@
 ] @operator
 
 ; Explicitly enclose these operators with binary_expression
-; to avoid confusion with JSX tag delimiters
-(binary_expression ["<" ">" "/"] @operator)
+; to avoid confusion with JSX tag delimiters and extension expressions.
+(binary_expression ["<" ">" "/" "%"] @operator)
 
 [
   "("

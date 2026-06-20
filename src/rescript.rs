@@ -118,8 +118,8 @@ impl zed::Extension for ReScriptExtension {
     ) -> Result<zed::Command> {
         let server_path = self.server_script_path(server_id, worktree)?;
 
-        let current_dir = env::current_dir()
-            .map_err(|e| format!("failed to get current directory: {e}"))?;
+        let current_dir =
+            env::current_dir().map_err(|e| format!("failed to get current directory: {e}"))?;
 
         Ok(zed::Command {
             command: zed::node_binary_path()?,
@@ -150,6 +150,17 @@ impl zed::Extension for ReScriptExtension {
                 }
             }
         })))
+    }
+
+    fn language_server_workspace_configuration(
+        &mut self,
+        language_server_id: &zed::LanguageServerId,
+        worktree: &zed::Worktree,
+    ) -> Result<Option<zed::serde_json::Value>> {
+        match zed::settings::LspSettings::for_worktree(language_server_id.as_ref(), worktree) {
+            Ok(LspSettings { settings, .. }) => Ok(settings),
+            Err(_) => Ok(None),
+        }
     }
 }
 

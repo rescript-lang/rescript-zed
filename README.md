@@ -9,31 +9,26 @@ This extension plugs in the following projects:
 - [@rescript/language-server](https://www.npmjs.com/package/@rescript/language-server)
   LSP
 
-## Installing the language server
+## Language Server
 
-The stable server is the default language server used by this extension. It uses
-the pre-v2 versions of `@rescript/language-server`, and the extension installs
-and updates that package automatically.
+The stable server is used by default. It is provided by the
+`@rescript/language-server` package, which the extension installs and updates
+automatically.
 
-Use `settings.version` when you need to pin a specific npm version. If it is
-omitted, Zed installs the latest published stable version.
+Use `settings.version` to pin a specific npm version. If it is omitted, Zed
+installs the latest published stable version.
 
-> [!NOTE]
-> The experimental server is the v2 language server published to npm under the
-> `dev` tag. Pin the package to the current `dev` version. See the version
-> history on
-> [npm](https://www.npmjs.com/package/@rescript/language-server?activeTab=versions).
-
-> [!TIP]
-> You can install the language server globally with
-> `npm i -g @rescript/language-server@dev` and set the binary path.
+> [!TIP] To test the experimental language server (ReScript v13), use the
+> `rescript lsp` subcommand included with the compiler. Set the binary path and
+> arguments as follows:
 >
 > ```json
 > {
 >   "lsp": {
 >     "rescript-language-server": {
 >       "binary": {
->         "path": "rescript-language-server"
+>         "path": "node_modules/.bin/rescript",
+>         "arguments": ["lsp", "--stdio"]
 >       }
 >     }
 >   }
@@ -46,7 +41,8 @@ omitted, Zed installs the latest published stable version.
 {
   "lsp": {
     "rescript-language-server": {
-      // Server configuration for pre-v2 should be passed through initialization_options
+      // Pass stable language server configuration through initialization_options
+      // See https://github.com/rescript-lang/rescript-vscode/blob/441959d1feeaaffc1a589687758b1fbe1f649e72/server/src/config.ts#L5-L29
       "initialization_options": {
         "extensionConfiguration": {
           "askToStartBuild": false,
@@ -54,7 +50,7 @@ omitted, Zed installs the latest published stable version.
       },
       "settings": {
         "version": "1.71.0-next-441959d.0",
-        // Server configuration for v2 should be passed through settings.rescript
+        // Pass experimental language server configuration through settings.rescript
         "rescript": {
           "hover": {
             "supportMarkdownLinks": true,
@@ -65,10 +61,6 @@ omitted, Zed installs the latest published stable version.
   },
 }
 ```
-
-`initialization_options` are passed to the language server (pre-v2) when it is started.
-They can be used to configure the language server. See
-[extensionConfiguration](https://github.com/rescript-lang/rescript-vscode/blob/441959d1feeaaffc1a589687758b1fbe1f649e72/server/src/config.ts#L5-L29)
 
 ## Developing
 
